@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signUpSchema } from "@/lib/auth-schema";
+import { signUp } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export default function SignupPage() {
 	// 1. Define your form.
@@ -37,15 +39,34 @@ export default function SignupPage() {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof signUpSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
+	async function onSubmit(values: z.infer<typeof signUpSchema>) {
+		const { username, email, password } = values;
+		const { data, error } = await signUp.email(
+			{
+				email,
+				password,
+				name: username,
+				callbackURL: "/sign-in",
+			},
+			{
+				onRequest: (ctx) => {
+					toast("Please wait...");
+				},
+				onSuccess: (ctx) => {
+					// form.reset();
+					callbackURL: "/sign-in";
+				},
+				onError: (ctx) => {
+					alert(ctx.error.message);
+				},
+			}
+		);
 		console.log(values);
 	}
 
 	return (
 		<div className="flex w-screen h-screen items-center">
-			<Card className="w-full max-w-sm mx-auto">
+			<Card className="w-full max-w-xs md:max-w-sm mx-auto">
 				<CardHeader>
 					<CardTitle>
 						<p className="text-2xl">Sign Up</p>

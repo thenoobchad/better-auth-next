@@ -15,6 +15,13 @@
       "when": 1746122508370,
       "tag": "0001_rich_smasher",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1746183410948,
+      "tag": "0002_brief_proudstar",
+      "breakpoints": true
     }
   ]
 }

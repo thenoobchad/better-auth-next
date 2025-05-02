@@ -47,7 +47,7 @@ export default function SigninPage() {
 
 	return (
 		<div className="flex w-screen h-screen items-center">
-			<Card className="w-full max-w-sm mx-auto">
+			<Card className="w-full max-w-xs md:max-w-sm mx-auto">
 				<CardHeader>
 					<CardTitle>
 						<p className="text-2xl">Sign In</p>
@@ -85,7 +85,9 @@ export default function SigninPage() {
 									</FormItem>
 								)}
 							/>
-							<Button className="w-full" type="submit">Submit</Button>
+							<Button className="w-full" type="submit">
+								Submit
+							</Button>
 						</form>
 					</Form>
 				</CardContent>
