@@ -17,24 +17,18 @@ import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-	username: z.string().min(2),
-	email: z.string().email(),
-	password: z.string().min(6),
-});
+import { signUpSchema } from "@/lib/auth-schema";
 
 export default function SignupPage() {
 	// 1. Define your form.
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof signUpSchema>>({
+		resolver: zodResolver(signUpSchema),
 		defaultValues: {
 			username: "",
 			email: "",
@@ -43,7 +37,7 @@ export default function SignupPage() {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
+	function onSubmit(values: z.infer<typeof signUpSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		console.log(values);
@@ -53,7 +47,9 @@ export default function SignupPage() {
 		<div className="flex w-screen h-screen items-center">
 			<Card className="w-full max-w-sm mx-auto">
 				<CardHeader>
-					<CardTitle>Sign Up</CardTitle>
+					<CardTitle>
+						<p className="text-2xl">Sign Up</p>
+					</CardTitle>
 					<CardDescription>Sign up to get started</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -93,20 +89,25 @@ export default function SignupPage() {
 									<FormItem>
 										<FormLabel>Password</FormLabel>
 										<FormControl>
-											<Input placeholder="" {...field} />
+											<Input placeholder="Enter password" {...field} />
 										</FormControl>
 
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
-							<Button type="submit">Submit</Button>
+							<Button type="submit" className="w-full">
+								Submit
+							</Button>
 						</form>
 					</Form>
 				</CardContent>
-				<CardFooter>
+				<CardFooter className="flex justify-center text-sm text-gray-800">
 					<p>
-						Already have an account? <a href="/sign-up"></a>sign in
+						Already have an account?{" "}
+						<a href="/sign-in" className="underline text-blue-500">
+							sign in
+						</a>
 					</p>
 				</CardFooter>
 			</Card>

@@ -25,16 +25,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { signInSchema } from "@/lib/auth-schema";
 
-const formSchema = z.object({
-	email: z.string().min(6),
-	password: z.string().min(2),
-});
 
 export default function SigninPage() {
 	// 1. Define your form.
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof signInSchema>>({
+		resolver: zodResolver(signInSchema),
 		defaultValues: {
 			email: "",
 			password: "",
@@ -42,7 +39,7 @@ export default function SigninPage() {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
+	function onSubmit(values: z.infer<typeof signInSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		console.log(values);
@@ -52,7 +49,9 @@ export default function SigninPage() {
 		<div className="flex w-screen h-screen items-center">
 			<Card className="w-full max-w-sm mx-auto">
 				<CardHeader>
-					<CardTitle>Sign in</CardTitle>
+					<CardTitle>
+						<p className="text-2xl">Sign In</p>
+					</CardTitle>
 					<CardDescription>Sign in to get started</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -79,20 +78,23 @@ export default function SigninPage() {
 									<FormItem>
 										<FormLabel>Password</FormLabel>
 										<FormControl>
-											<Input placeholder="********" {...field} />
+											<Input placeholder="Enter password" {...field} />
 										</FormControl>
 
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
-							<Button type="submit">Submit</Button>
+							<Button className="w-full" type="submit">Submit</Button>
 						</form>
 					</Form>
 				</CardContent>
-				<CardFooter>
+				<CardFooter className="flex justify-center text-sm text-gray-800">
 					<p>
-						Don't have an account? <Link href="/sign-up">sign up</Link>
+						Already have an account?{" "}
+						<a href="/sign-up" className="underline text-blue-500">
+							sign up
+						</a>
 					</p>
 				</CardFooter>
 			</Card>
